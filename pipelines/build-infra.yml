@@ -1,0 +1,19 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:  
+- task: AzurePowerShell@5
+  inputs:
+    azureSubscription: 'VinPersonal (80cf84ff-f15e-4f0d-85f1-8f0b44187821)'
+    ScriptType: 'FilePath'
+    ScriptPath: './scripts/Deploy-AzTemplate.ps1'
+    ScriptArguments: '-ResourceGroupName vbtapp67-rg -Location westeurope -TemplateFile /home/vsts/work/1/s/infra/main.json -TemplateParametersFile /home/vsts/work/1/s/infra/param-dev.json -ArtifactStagingDirectory .'
+    azurePowerShellVersion: 'LatestVersion'
